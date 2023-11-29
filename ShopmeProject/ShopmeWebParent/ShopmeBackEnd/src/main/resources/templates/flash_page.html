@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Some Logged Out</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+</head>
+<body onLoad="setTimeout('delayer()', 5000)">
+	<div class="alert alert-success text-center">
+		<i class="bi bi-box-arrow-right"  style="font-size: 160px; color: orangered;">Has been logged out!</i>
+			&nbsp;
+		<h1>You have been logged out.</h1>
+		<h2>You would be redirected to the login page in 5 seconds.</h2>
+	</div>
+	<p id="result"></p>
+	<!--<button onclick="redirect()">Back to Login</button>-->
+	<script>
+		function delayer() {
+			window.location = "/ShopmeAdmin/login";
+		}
+		function redirect() {
+			setTimeout(myURL, 3000);
+			var result = document.getElementById("result");
+			result.innerHTML = "<b> To login page in 3 seconds";
+		}
+
+		function myURL() {
+			document.location.href = '/ShopmeAdmin/login';
+		}
+	</script>
+</body>
+
+</html>
