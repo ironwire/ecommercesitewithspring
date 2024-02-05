@@ -42,6 +42,7 @@ public class WebSecurityConfig {
 	  SecurityFilterChain filterChain(HttpSecurity http, RememberMeServices rememberMeServices) throws Exception {
 	        http
 	            .authorizeHttpRequests((authz) -> authz
+	            		.requestMatchers("/product-images/**").hasAnyAuthority("Admin","Editor","Salesperson","Shipper")
 	                .requestMatchers("/users","/users/**").hasAuthority("Admin")
 	                .requestMatchers("/categories/**").hasAnyAuthority("Admin","Editor")
 	                .requestMatchers("/brands/**").hasAnyAuthority("Admin","Editor")

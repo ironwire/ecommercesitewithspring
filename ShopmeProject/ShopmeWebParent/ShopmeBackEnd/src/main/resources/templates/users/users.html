@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<head th:replace="fragments :: page_head('Shopme -- 用户管理 Panel ?? ')">
+<head th:replace="fragments :: page_head('Shopme -- 用户管理 Panel ?? ', 'none')">
 </head>
 
 <body>
@@ -21,38 +21,21 @@
 		<div th:if="${message != null}" class="alert alert-success text-center">
 			[[${message}]]
 		</div>
-		<div>
-			<form th:action="@{/users/page/1}" class="form-inline m-3">
-				<input type="hidden" name="sortField" th:value="${sortField}" />
-				<input type="hidden" name="sortDir" th:value="${sortDir}" />
-				Filter:&nbsp;
-				<input type="search" name="keyword" th:value="@{keyword}" class="form-control" required />
-				&nbsp; &nbsp;
-				<button type="submit" class="btn btn-primary">
-					<i class="fas fa-search"></i>
-				</button>
-				&nbsp; &nbsp;
-				<button type="button" class="btn btn-secondary" onclick="clearFilter()">
-					<i class="fas fa-eraser"></i>
-				</button>
-			</form>
-
-
-		</div>
+	<div th:replace="fragments :: search_form('/users/page/1')" />
 		<div class="full-details">
 			<table class="table table-bordered table-striped table-hover table-responsive-xl">
 				<thead class="thead-dark">
 					<th class="hideable-column">
-						<th th:replace="fragments :: column_link('id', 'User ID', 'tag')" />
+						<th th:replace="fragments :: column_link('/users','id', 'User ID', 'tag')" />
 					</th>
 					<th>Photos</th>
 					<th class="hideable-column">
-					<th th:replace="fragments::column_link('email', 'E-mail', 'tag')">Email</th>
+					<th th:replace="fragments::column_link('/users','email', 'E-mail', 'tag')">Email</th>
 					</th>
-					<th th:replace="fragments::column_link('firstName', 'First Name', 'none')"></th>
-					<th th:replace="fragments::column_link('lastName','Last Name', 'none')">Last Name</th>
+					<th th:replace="fragments::column_link('/users','firstName', 'First Name', 'none')"></th>
+					<th th:replace="fragments::column_link('/users','lastName','Last Name', 'none')">Last Name</th>
 					<th>Roles</th>
-					<th th:replace="fragments::column_link('enabled','Enabled', 'none')">Enabled</th>
+					<th th:replace="fragments::column_link('/users','enabled','Enabled', 'none')">Enabled</th>
 					<th></th>
 
 				</thead>
@@ -115,43 +98,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="text-center m-1" th:if="${totalItems > 0}">
-			<span>Showing users # [[${startCount}]] to # [[${endCount}]] of [[${totalItems}]]</span>
-			<!--<span th:text = "@{'Showing users #'+${startCount}+ ' to #'+${endCount} +' of '+${totalItems}}"></span>-->
-		</div>
-		<div class="text-center m-1" th:unless="${totalItems > 0}">
-			<span>No Users Found.</span>
-		</div>
-		<div th:if="${totalPages > 0}">
-			<nav aria-label="Page navigation example">
-				<ul class="pagination justify-content-center flex-wrap">
-					<li th:class="${currentPage != 1? 'page-item' : 'page-item disabled'}">
-						<a class="page-link"
-							th:href="@{'/users/page/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}+${keyword != null? '&keyword='+keyword : ''}}">First</a>
-					</li>
-					<li th:class="${currentPage > 1? 'page-item' : 'page-item disabled'}">
-						<a class="page-link"
-							th:href="@{'/users/page/'+${currentPage -1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}+${keyword != null? '&keyword='+keyword : ''}}">Previous</a>
-					</li>
-
-					<li th:class="${currentPage !=i? 'page-item':'page-item active'}"
-						th:each="i: ${#numbers.sequence(1, totalPages)}">
-						<a class="page-link"
-							th:href="@{'/users/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}+${keyword != null? '&keyword='+keyword : ''}}">[[${i}]]</a>
-					</li>
-
-					<li th:class="${currentPage != totalPages? 'page-item' : 'page-item disabled'}">
-						<a class="page-link"
-							th:href="@{'/users/page/'+${currentPage +1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}+${keyword != null? '&keyword='+keyword : ''}}">Next</a>
-					</li>
-					<li th:class="${currentPage < totalPages? 'page-item' : 'page-item disabled'}">
-						<a class="page-link"
-							th:href="@{'/users/page/'+${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}+${keyword != null? '&keyword='+keyword : ''}}">Last</a>
-					</li>
-				</ul>
-			</nav>
-
-		</div>
+		<div th:replace="fragments :: pagenation('/users', 'users')"></div>
+		
 		<div class="modal fade text-center" id="deleteConfirmModal">
 			<div class="modal-dialog">
 				<div class="modal-content">

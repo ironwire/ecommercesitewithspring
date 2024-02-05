@@ -1,9 +1,33 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title></title>
-	</head>
-	<body>
-		<h1>欢迎来到Shopme</h1>
-	</body>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: page_head('Shopme Center', 'none')">
+	<meta charset="UTF-8">
+	<title>Welcome to Shopme</title>
+
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div th:replace="navigation :: header_menu">
+		</div>
+		<div th:replace="navigation :: search_nav">
+		</div>
+		<div>
+			<h1>欢迎来到Shopme, shopping by 目录</h1>
+		</div>
+		<div class="row">
+			<div class="col" th:each="cat:${listCategories}">
+				<div><img th:src="@{${cat.imagePath}}" width="80"/></div>
+				<div>
+					<a th:href="@{'/c/'+${cat.alias}}">[[${cat.name}]]</a>
+				</div>
+				
+			</div>
+		</div>		
+<div th:replace="navigation :: footer_menu">		
+	</div>
+	
+</body>
+
 </html>

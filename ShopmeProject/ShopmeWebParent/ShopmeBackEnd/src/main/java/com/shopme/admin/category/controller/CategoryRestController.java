@@ -19,4 +19,20 @@ public class CategoryRestController {
 			@Param("alias") String alias) {
 		return service.checkUnique(id, name, alias);
 	}
+	
+	@PostMapping("/categories/check_children")
+	public String checkIsExistingChildren(@Param("id") Integer id) {
+		Long count = service.countByParentId(id);
+		
+		System.out.println("count is llllll "+count+" "+id);
+		
+		String responseString = "No";
+		if(count == 0) {
+			return responseString;
+		}else {
+			System.out.println("return Yes");
+			responseString = "Yes";
+			return responseString;
+		}
+	}
 }

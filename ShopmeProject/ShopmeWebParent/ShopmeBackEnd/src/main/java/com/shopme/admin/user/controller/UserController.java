@@ -74,7 +74,6 @@ public class UserController {
 		model.addAttribute("totalItems", page.getTotalElements());
 		model.addAttribute("users", listUsers);
 		model.addAttribute("sortField", sortField);
-		model.addAttribute("endCount", endCount);
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		model.addAttribute("keyword", keyword);

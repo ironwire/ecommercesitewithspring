@@ -61,7 +61,11 @@ public class CategoryRepositoryTest {
 	}
 	
 	@Test
-	public void testFindByName() {
+	public void testCountByParentId() {
+		
+		Long count = crepo.countByParentId(10);
+		System.out.println(count);
+		assertThat(count).isGreaterThan(0);
 		
 	}
 	

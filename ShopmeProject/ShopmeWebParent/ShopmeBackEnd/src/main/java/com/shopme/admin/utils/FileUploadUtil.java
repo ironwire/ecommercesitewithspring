@@ -32,22 +32,29 @@ public class FileUploadUtil {
 		
 		public static void cleanDir(String dir) {
 			Path dirPath = Paths.get(dir);
-			
+			System.out.println("dirPath------------: "+dirPath); //here dirPath is '../category-images/5'
 			try {
-				Files.list(dirPath).forEach(file ->{
-					if(!Files.isDirectory(file)) {
+				Files.list(dirPath).forEach(file -> {
+					if (!Files.isDirectory(file)) {
 						try {
-							
 							Files.delete(file);
-							}catch(IOException ex) {
-							LOGGER.error("Could not delete file." + file);
-								//System.out.println("could not delete file: " + file);
+						} catch (IOException ex) {
+							LOGGER.error("Could not delete file: " + file);
 						}
 					}
 				});
-			}catch(IOException ex) {
-				LOGGER.error("Could not list directory"+dirPath);
-				//System.out.println("Could not list directory."+ dirPath);
+			} catch (IOException ex) {
+				LOGGER.error("Could not list directory: " + dirPath);
+			}
+		}
+		
+		public static void removeDir(String dir) {
+			cleanDir(dir);
+			
+			try {
+				Files.delete(Paths.get(dir));
+			}catch (IOException e) {
+				LOGGER.error("Could not remove directory: "+dir);
 			}
 		}
 }
